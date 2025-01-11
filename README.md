@@ -4,7 +4,7 @@
 ## Notes
 
 - This configuration is only designed to be used on a Linux machine.
-- The audio controls only work for pulse audio.
+- The audio controls only work for pulse audio, using the `pactl` program.
 
 ## Assumptions
 
