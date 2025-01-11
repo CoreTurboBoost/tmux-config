@@ -1,0 +1,86 @@
+
+# Enable vim like key bindings.
+setw -g mode-keys vi
+
+# Tell tmux to use 256-color mode.
+set-option -g default-terminal "screen-256color"
+set-option -ga terminal-overrides ',xterm-256color:Tc'
+
+# Enable the clipboard (This should already be on by default).
+set-option -g set-clipboard on
+
+# Set the status bar location to the top (changed from the default, bottom).
+set-option -g status-position top
+# Set the default colors for the status bar.
+set-option -g status-style bg=blue,fg=black
+
+# Set status bar maximum character length for right aligned text.
+set -g status-right-length 52
+# Set status bar contents.
+#   Assume 'get-ipv4.sh' and 'get-battery-percentage.sh' are in $PATH
+set -g status-right " #[fg=black]IPv4:#(get-ipv4.sh) | #[fg=yellow]BAT:#(get-battery-percentage.sh)%#[fg=black] | %R %d-%b-%y "
+
+# Set <CTRL>-<SPACE> as the new leader key.
+unbind C-Space
+set -g prefix C-Space
+bind C-Space send-prefix
+
+# Enable mouse support.
+set -g mouse on
+
+# Change history limit from default 2000 lines.
+set-option -g history-limit 5000
+
+# Key bindings
+
+# Jumping back to a marked pane.
+bind \` switch-client -t'{marked}'
+
+# vertically split and horizontally split panes.
+unbind %
+unbind \"
+bind _ split-window -vc "#{pane_current_path}"
+bind \\ split-window -hc "#{pane_current_path}"
+
+# Join windows
+bind J choose-window 'join-pane -s "%%"'
+
+# Switch pane using Alt-hjkl.
+bind -n M-h select-pane -L
+bind -n M-j select-pane -D
+bind -n M-k select-pane -U
+bind -n M-l select-pane -R
+
+# prefix+b to toggle the status bar.
+bind b set-option status
+
+# Swap panes using prefix-hjkl  (Note, these are based on the pane ID, not the relative position of the pane itself).
+bind -r h swap-pane -d -t -1
+bind -r l swap-pane -d -t +1
+# These two don't work as intended, due to the use of pane ID's when swapping.
+bind -r k swap-pane -d -t -U
+bind -r j swap-pane -d -t -D
+
+# Hot-reload the current tmux session.
+bind r source-file ~/.tmux.conf
+
+# Renumber windows. Keep the window numbering gap-less.
+set -g renumber-windows on
+
+# New pane to use the current panes path (rather than $HOME).
+bind c new-window -c '#{pane_current_path}'
+
+# Resizing panes (The numbers are in tmux cell units) prefix-<CTRL>-hjkl.
+bind -r C-h resize-pane -L 5
+bind -r C-j resize-pane -D 5
+bind -r C-k resize-pane -U 5
+bind -r C-l resize-pane -R 5
+
+# Change volume, for the pulse audio server.
+bind -r = run-shell "pactl set-sink-volume @DEFAULT_SINK@ +5%"
+bind -r - run-shell "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+# Mute the audio, for the pulse audio server.
+bind m run-shell "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+
+# Remove delay when pressing escape. Make vim feel more responsive.
+set -s escape-time 0
