@@ -77,10 +77,10 @@ bind -r C-k resize-pane -U 5
 bind -r C-l resize-pane -R 5
 
 # Change volume, for the pulse audio server.
-bind -r = run-shell "pactl set-sink-volume @DEFAULT_SINK@ +5%"
-bind -r - run-shell "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+bind -r = run-shell "volume-increase.sh"
+bind -r - run-shell "volume-decrease.sh"
 # Mute the audio, for the pulse audio server.
-bind m run-shell "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+bind m run-shell "volume-toggle-mute.sh"
 
 # Remove delay when pressing escape. Make vim feel more responsive.
 set -s escape-time 0

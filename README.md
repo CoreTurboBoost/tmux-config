@@ -4,12 +4,14 @@
 ## Notes
 
 - This configuration is only designed to be used on a Linux machine.
-- The audio controls only work for pulse audio, using the `pactl` program.
 
 ## Assumptions
 
 - There is a script `get-ipv4.sh` that would output the current IPv4 address to stdout and is in your `$PATH`.
 - There is a script `get-battery-percentage.sh` that would output the current battery percentage to stdout and is in your `$PATH`.
+- There is a script `volume-increase.sh` that would increase the audio volume and is in your `$PATH`.
+- There is a script `volume-decrease.sh` that would decrease the audio volume and is in your `$PATH`.
+- There is a script `volume-toggle-mute.sh` that would toggle the audio mute and is in your `$PATH`.
 - Your tmux version is recent enough. Tested using tmux version `tmux 3.0a`.
 
 ## How to setup
